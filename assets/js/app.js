@@ -1,10 +1,8 @@
-
+$("#loader").show();
 
 $(window).resize(function () {
   sizeLayerControl();
-  
 });
-
 
 $("#about-btn").click(function () {
   $("#aboutModal").modal("show");
@@ -17,6 +15,7 @@ $("#full-extent-btn").click(function () {
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
+
 
 $("#legend-btn").click(function () {
   $("#legendModal").modal("show");
@@ -72,7 +71,7 @@ var arcgisOnline = new L.tileLayer(
   });
 
 //area1m boundary
-var area1m = new L.geoJson(null, {
+var area1m_2 = new L.geoJson(null, {
   style: function (feature) {
     return {
       color: '#ffae42',
@@ -97,10 +96,11 @@ var area1m = new L.geoJson(null, {
       click: function (e) {
 
         highlight.clearLayers().addLayer(L.polygon(layer.getLatLngs(), polyhighlightStyle));
-        
+        map_click_to_info(e);
       }
     });
-    layer.bindPopup(content);
+    
+   // layer.bindPopup(content);
     layer.on({
       mouseover: function (e) {
         var layer = e.target;
@@ -114,23 +114,24 @@ var area1m = new L.geoJson(null, {
         }
       },
       mouseout: function (e) {
-        area1m.resetStyle(e.target);
+        area1m_2.resetStyle(e.target);
       }
 
 
     });
 
-  }
-
+  }  ,
+  layers:"geonode:area1m_2",
+  version: '1.0.0'
 
 });
-$.getJSON("data/area1m.geojson", function (data) {
-  area1m.addData(data);
+$.getJSON("http://82.116.78.168/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Aarea1m_2&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&access_token=R6Yx192Iks148W06DcL2VLZSpRZnYM", function (data) {
+  area1m_2.addData(data);
 });
 
 
 //GRID_10_sqkm boundary
-var GRID_10_sqkm = new L.geoJson(null, {
+var grid_10_sqkm_1 = new L.geoJson(null, {
   style: function (feature) {
     return {
       color: '#00A4AB',
@@ -155,10 +156,11 @@ var GRID_10_sqkm = new L.geoJson(null, {
       click: function (e) {
 
         highlight.clearLayers().addLayer(L.polygon(layer.getLatLngs(), polyhighlightStyle));
-        
+        map_click_to_info(e);
       }
     });
-    layer.bindPopup(content);
+   
+    //layer.bindPopup(content);
     layer.on({
       mouseover: function (e) {
         var layer = e.target;
@@ -172,24 +174,26 @@ var GRID_10_sqkm = new L.geoJson(null, {
         }
       },
       mouseout: function (e) {
-        GRID_10_sqkm.resetStyle(e.target);
+        grid_10_sqkm_1.resetStyle(e.target);
       }
 
 
     });
 
-  }
+  },
+  layers:"geonode:grid_10_sqkm_1",
+  version: '1.0.0'
 
 
 });
-$.getJSON("data/GRID_10_sqkm.geojson", function (data) {
-  GRID_10_sqkm.addData(data);
+$.getJSON("http://82.116.78.168/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Agrid_10_sqkm_1&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&access_token=R6Yx192Iks148W06DcL2VLZSpRZnYM", function (data) {
+  grid_10_sqkm_1.addData(data);
 });
 
 
 
 //GRID_1_sqkm boundary
-var GRID_1_sqkm = new L.geoJson(null, {
+var grid_1_sqkm_1 = new L.geoJson(null, {
   style: function (feature) {
     return {
       color: '#00A4AB',
@@ -213,11 +217,13 @@ var GRID_1_sqkm = new L.geoJson(null, {
     layer.on({
       click: function (e) {
 
-        highlight.clearLayers().addLayer(L.polygon(layer.getLatLngs(), polyhighlightStyle));
+       highlight.clearLayers().addLayer(L.polygon(layer.getLatLngs(), polyhighlightStyle));
+       map_click_to_info(e);
         
       }
     });
-    layer.bindPopup(content);
+    
+    //layer.bindPopup(content);
     layer.on({
       mouseover: function (e) {
         var layer = e.target;
@@ -231,18 +237,19 @@ var GRID_1_sqkm = new L.geoJson(null, {
         }
       },
       mouseout: function (e) {
-        GRID_1_sqkm.resetStyle(e.target);
+        grid_1_sqkm_1.resetStyle(e.target);
       }
 
 
     });
 
-  }
-
+  },
+  layers:"geonode:grid_1_sqkm_1",
+  version: '1.0.0'
 
 });
-$.getJSON("data/GRID_1_sqkm.geojson", function (data) {
-  GRID_1_sqkm.addData(data);
+$.getJSON("http://82.116.78.168/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Agrid_1_sqkm_1&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature&access_token=R6Yx192Iks148W06DcL2VLZSpRZnYM", function (data) {
+  grid_1_sqkm_1.addData(data);
 });
 
 
@@ -262,8 +269,8 @@ var highlight = L.geoJson(null);
 var highlightStyle = {
   stroke: false,
   fillColor: "#00FFFF",
-  fillOpacity: 0.4,
-  radius: 10
+  fillOpacity: 1,
+  radius: 5
 };
 
 
@@ -432,7 +439,7 @@ map = L.map('map', {
   zoom: 20,
   center: [68.264847, 14.336944],
     "Aerial Imagery": arcgisOnline,
-  layers: [arcgisOnline, GRID_10_sqkm, highlight],
+  layers: [arcgisOnline, grid_10_sqkm_1, highlight],
   zoomControl: false,
   attributionControl: false
 });
@@ -514,15 +521,15 @@ var overlays = [
     groupName: "Grid cells",
     expanded: true,
     layers: {
-      "Grid cells 10 Sq. Km.": GRID_10_sqkm,
-      "Grid cells 1 Sq. Km.": GRID_1_sqkm
+      "Grid cells 10 Sq. Km.": grid_10_sqkm_1,
+      "Grid cells 1 Sq. Km.": grid_1_sqkm_1
     }
   },
     {
     groupName: "Other layers",
     expanded: false,
     layers: {
-      "1 meter DEM available": area1m,
+      "1 meter DEM available": area1m_2,
       "Best coastline": best_coastline_lofoten
      }
   }, {
@@ -585,6 +592,7 @@ map.addControl(control);
 
 
 
+
 //controlling the legend size /popup
 function sizeLayerControl() {
   $(".leaflet-control-layers").css("max-height", $("#map").height() - 50);
@@ -603,20 +611,17 @@ function sizeLayerControl() {
   }
 }
 
-/* Clear feature highlight when map is clicked */
-map.on("click", function(e) {
-  highlight.clearLayers();
-});
-
-
 
 /* Load the content before map load */
 $(document).one("ajaxStop", function () {
-  $("#loading").hide();
+$("#loader").hide();
   /* Fit map to GRID_10_sqkm bounds */
-  map.fitBounds(GRID_10_sqkm.getBounds());
+  map.fitBounds(grid_10_sqkm_1.getBounds());
 
 });
+
+//map click event
+map.on("click", function(e) { map_click_to_info(e)  });
 
 // Leaflet patch to make layer control scrollable on touch browsers
 var container = $(".leaflet-control-layers")[0];

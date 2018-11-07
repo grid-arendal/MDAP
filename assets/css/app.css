@@ -21,7 +21,7 @@ input[type=radio], input[type=checkbox] {
   height: 100%;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
-#loading2 {
+/* #loading {
   position: absolute;
   width: 220px;
   height:19px;
@@ -29,7 +29,7 @@ input[type=radio], input[type=checkbox] {
   left: 50%;
   margin: -10px 0 0 -110px;
   z-index: 20001;
-}
+} */
 
 #features {
   margin: 0px;
@@ -271,3 +271,72 @@ input[type=radio], input[type=checkbox] {
 
       color: #4e6bb1;
     }
+
+
+    /* loading css */
+    #loader {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      width: 150px;
+      height: 150px;
+      margin: -75px 0 0 -75px;
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
+    
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Add animation to "page content" */
+    .animate-bottom {
+      position: relative;
+      -webkit-animation-name: animatebottom;
+      -webkit-animation-duration: 1s;
+      animation-name: animatebottom;
+      animation-duration: 1s
+    }
+    
+    @-webkit-keyframes animatebottom {
+      from { bottom:-100px; opacity:0 } 
+      to { bottom:0px; opacity:1 }
+    }
+    
+    @keyframes animatebottom { 
+      from{ bottom:-100px; opacity:0 } 
+      to{ bottom:0; opacity:1 }
+    }
+    
+  /* table css */
+    td, th {
+      border: 1px solid Black;
+      padding: 3px;
+    }
+    .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+      border-bottom-width: 0px;
+  }
+  
+  /* popup window css*/
+
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: #9FCFE6;
+    /* box-shadow: 0 3px 14px rgba(36, 251, 240, 0.81); */
+  }
+  .leaflet-popup-content-wrapper {
+    padding: 1px;
+    text-align: left;
+    border-radius: 10px;
+  }
